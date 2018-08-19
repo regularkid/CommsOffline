@@ -1,0 +1,54 @@
+General
+    - System for easily adding/modifying sub-systems
+    - System for when sub-systems go offline/online
+    - Display for sub-systems
+    - System for adding sub-systems as the player progresses
+Console
+    - System for typing text
+    - Text wrapping?
+    - Command to clear screen
+    - Command for help (gives you instructions on how to bring a system back online. ex: 'help comms')
+    - Command for increasing system health (idle mechanic)
+        - Type ''
+        - Wait for spinning icon '/' '-' '|' (random amount where you can't online any systems)
+    - Red flashing when low on health
+    - Corruption if memory is offline too long
+    - 'Unknown command" message
+Welcome screen
+    - Enter Username
+    - Enter Password
+    - Given Access Code + welcome message
+Systems that can go offline (more are added as you play)
+    Comms
+        - Type 'comms on'
+    Thermal
+        - Type 'thermal on'
+        - Type Password
+        - If forgot, type 'forgot pass'
+            - Enter new Password = password updated
+    Memory
+        - Type 'check disk'
+        - Wait for dots (random amount) "Fixing memory errors....."
+    Security
+        - Type 'arm system'
+        - Type access Code
+        - If forgot access code type 'forgot access'
+            - Enter password
+    Lasers
+        - Type 'enable lasers'
+        - Security system must be online
+        - Status window gives you directional sequence
+        - Waits for arrow key input matching sequence
+    Imaging
+        - Type 'scanner on'
+        - Get a CAPTCHA
+        - Re-enter CAPTCHA correctly
+    Network
+        - Type 'network sync'
+        - See 'Enter routing address:'
+            - This IP address is sent to console every once in a while (but will scroll off so you need to remember it)
+    Propulsion
+        - Type 'boosters on'
+        - Need enough fuel
+            - Fuel meter can be increased by typing 'add fuel'
+            - Can check fuel by typing 'check fuel' - gives you back a %
