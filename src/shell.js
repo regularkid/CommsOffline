@@ -6,7 +6,7 @@ class Shell
         this.x = 5;
         this.y = 5;
         this.maxLines = 20;
-        this.maxLineLength = 60;
+        this.maxLineLength = 66;
         this.lineHeight = 20;
         this.cursorBlinkTimer = 0;
         this.messages = [];
@@ -57,7 +57,7 @@ class Shell
             // TODO: Execute commands and do actual parsing here
             if (this.lines[curLineIdx] === "> message")
             {
-                this.addMessage("Message Number 1", 1.0, 0.1);
+                this.addMessage("Message Number 1\n", 1.0, 0.1);
             }
             else if (this.lines[curLineIdx] === "> help")
             {
@@ -72,8 +72,10 @@ class Shell
             }
             else
             {
-                this.addLine("> ");
+                this.addMessage("Unknown command\n", 0.1, 0.01);
             }
+
+            //aw.playNote("a", 1, 0.01);
         }
         else if (key === "Backspace")
         {
@@ -81,12 +83,14 @@ class Shell
             {
                 this.lines[curLineIdx] = this.lines[curLineIdx].slice(0, -1);
             }
+
+            //aw.playNote("a", 1, 0.01);
         }
         else if (key.length === 1 && this.lines[curLineIdx].length < this.maxLineLength && /[a-zA-Z0-9\s.,-=\\!/@#$%^&*()_+;:'"`~]/.test(key))
         {
             this.lines[curLineIdx] += key;
 
-            //aw.playNote("c", 2, 0.01);
+            //aw.playNote("a", 1, 0.01);
         }
     }
 
@@ -121,6 +125,8 @@ class Shell
                     
                     curMessage.message = curMessage.message.slice(1);
                     curMessage.curCharDelay = curMessage.charDelay;
+
+                    //aw.playNote("a", 1, 0.01);
                 }
             }
             else
