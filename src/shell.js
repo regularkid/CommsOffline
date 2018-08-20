@@ -146,7 +146,7 @@ class Shell
     {
         this.lines.forEach((line, index) =>
         {
-            aw.drawText({text:line, x:this.x, y:this.y + (index * this.lineHeight), fontName:"courier", fontSize:14, fontStyle:"", color:"#FFF", textBaseline:"top"})
+            aw.drawText({text:line, x:this.x, y:this.y + (index * this.lineHeight), fontName:"courier", fontSize:14, fontStyle:"", color:foregroundColor, textBaseline:"top"})
         });
 
         if (Date.now() % 1000 < 500)
@@ -156,7 +156,7 @@ class Shell
             let widthCursor = this.lineHeight*0.35;
             let heightCursor = this.lineHeight*0.8;
 
-            aw.ctx.fillStyle="#FFF";
+            aw.ctx.fillStyle = foregroundColor;
             aw.ctx.fillRect(xCursor, yCursor, widthCursor, heightCursor);
         }
     }
