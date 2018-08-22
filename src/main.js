@@ -10,6 +10,9 @@ aw.state = start;
 function start()
 {
     aw.addEntity(new Shell());
+    aw.addEntity(new Status());
+    aw.addEntity(new Health());
+    aw.addEntity(new DataStream());
 
     // DEBUG TESTING
     aw.addEntity(new System("COMMS", 0));
@@ -42,11 +45,11 @@ function drawConsole()
     aw.ctx.fillRect(580, 0, 2, 600);
 
     // Horizontal line separating shell from status display
-    aw.ctx.fillRect(0, 406, 580, 2);
+    aw.ctx.fillRect(0, 406, 580, 22);
 
     // Horizontal line separating status display from health display
-    aw.ctx.fillRect(0, 540, 580, 2);
+    aw.ctx.fillRect(0, 528, 580, 22);
 
     // Horizontal line separating systems display from data stream
-    aw.ctx.fillRect(580, 510, 280, 2);
+    aw.ctx.fillRect(580, 528, 280, 22);
 }

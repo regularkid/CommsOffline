@@ -19,9 +19,9 @@ class System
     render()
     {
         let xRect = 590;
-        let yRect = 10 + this.systemIdx*50;
+        let yRect = 10 + this.systemIdx*52;
         let widthRect = 200;
-        let heightRect = 40;
+        let heightRect = 42;
 
         let displayOffline = !this.isOnline && (Date.now() % 500 < 250);
 
@@ -36,6 +36,6 @@ class System
         aw.ctx.strokeRect(xRect, yRect, widthRect, heightRect);
 
         let fontColor = displayOffline ? "#FFF" : foregroundColor;
-        aw.drawText({text:this.name, x:xRect + 10, y:yRect + 20, fontName:"courier", fontSize:28, fontStyle:"bold", color:fontColor, textBaseline:"middle"})
+        aw.drawText({text:this.name, x:xRect + 10, y:yRect + 22, fontName:"courier", fontSize:28, fontStyle:"bold", color:fontColor, textBaseline:"middle"})
     }
 }
