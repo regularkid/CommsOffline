@@ -52,4 +52,26 @@ function drawConsole()
 
     // Horizontal line separating systems display from data stream
     aw.ctx.fillRect(580, 528, 280, 22);
+
+    // Draw screen lines
+    aw.ctx.fillStyle = "#FFF"
+    aw.ctx.globalAlpha = 0.01;
+    for (let i = 0; i < 100; i++)
+    {
+        aw.ctx.fillRect(0, i * 10, screenWidth, 7);
+    }
+    aw.ctx.globalAlpha = 1.0;
+
+    // Draw scanline gradient
+    let scanTime = 6000;
+    let heightScanline = 400;
+    let yScanline = ((Date.now() % scanTime) / scanTime) * (screenHeight + heightScanline)*1.5;
+
+    var scanlineGradient = aw.ctx.createLinearGradient(0, yScanline - heightScanline, 0, yScanline);
+    scanlineGradient.addColorStop(0,"rgba(255, 255, 255, 0.0)");
+    scanlineGradient.addColorStop(0.95,"rgba(255, 255, 255, 0.03)");
+    scanlineGradient.addColorStop(1,"rgba(255, 255, 255, 0.00)");
+
+    aw.ctx.fillStyle = scanlineGradient;
+    aw.ctx.fillRect(0, yScanline - heightScanline, screenWidth, heightScanline);
 }
