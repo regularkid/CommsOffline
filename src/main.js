@@ -10,6 +10,19 @@ aw.state = start;
 function start()
 {
     aw.addEntity(new Shell());
+
+    // DEBUG TESTING
+    aw.addEntity(new System("COMMS", 0));
+    aw.addEntity(new System("MEMORY", 1));
+    aw.addEntity(new System("SECURITY", 2));
+    aw.addEntity(new System("THERMAL", 3));
+    aw.addEntity(new System("IMAGING", 4));
+    aw.addEntity(new System("NETWORK", 5));
+    aw.addEntity(new System("PROPULSION", 6));
+    aw.addEntity(new System("LASERS", 7));
+    aw.addEntity(new System("TIMING", 8));
+    aw.addEntity(new System("GRAVITY", 9));
+
     aw.state = playing;
 }
 
@@ -35,5 +48,5 @@ function drawConsole()
     aw.ctx.fillRect(0, 540, 580, 2);
 
     // Horizontal line separating systems display from data stream
-    aw.ctx.fillRect(580, 540, 280, 2);
+    aw.ctx.fillRect(580, 510, 280, 2);
 }
