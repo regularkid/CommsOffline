@@ -61,9 +61,9 @@ class Shell
             }
             else if (this.lines[curLineIdx] === "> help")
             {
-                this.addMessage("This will be where help text goes.\n", 0.2, 0.01);
-                this.addMessage("2nd line.\n", 0.2, 0.01);
-                this.addMessage("3rd line.\n", 0.2, 0.01);
+                this.addMessage("This will be where help text goes.\n", 0.2, 0.0125);
+                this.addMessage("2nd line.\n", 0.2, 0.0125);
+                this.addMessage("3rd line.\n", 0.2, 0.0125);
             }
             else if (this.lines[curLineIdx] === "> clear")
             {
@@ -105,28 +105,34 @@ class Shell
             }
             else if (curMessage.message.length > 0)
             {
-                if (curMessage.curCharDelay > 0.0)
+                let timeRemaining = deltaTime;
+                while (timeRemaining > 0.0 && curMessage.message.length > 0)
                 {
-                    curMessage.curCharDelay -= deltaTime;
-                }
-
-                if (curMessage.curCharDelay <= 0.0)
-                {
-                    let nextChar = curMessage.message[0];
-                    if (nextChar === "\n")
+                    if (curMessage.curCharDelay > 0.0)
                     {
-                        this.addLine("");
+                        let tickTime = Math.min(timeRemaining, curMessage.curCharDelay);
+                        timeRemaining -= tickTime;
+                        curMessage.curCharDelay -= tickTime;
                     }
-                    else
-                    {
-                        let curLineIdx = this.lines.length - 1;
-                        this.lines[curLineIdx] += nextChar;
-                    }
-                    
-                    curMessage.message = curMessage.message.slice(1);
-                    curMessage.curCharDelay = curMessage.charDelay;
 
-                    //aw.playNote("a", 1, 0.01);
+                    if (curMessage.curCharDelay <= 0.0)
+                    {
+                        let nextChar = curMessage.message[0];
+                        if (nextChar === "\n")
+                        {
+                            this.addLine("");
+                        }
+                        else
+                        {
+                            let curLineIdx = this.lines.length - 1;
+                            this.lines[curLineIdx] += nextChar;
+                        }
+                        
+                        curMessage.message = curMessage.message.slice(1);
+                        curMessage.curCharDelay = curMessage.charDelay;
+
+                        //aw.playNote("a", 1, 0.01);
+                    }
                 }
             }
             else
