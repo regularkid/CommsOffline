@@ -46,7 +46,7 @@ class Shell
     onKeyDown(key)
     {
         // Don't allow typing while a message is being displayed
-        if (this.messages.length > 0)
+        if (this.messages.length > 0 || healthDisplay.isDead())
         {
             return;
         }
@@ -118,7 +118,7 @@ class Shell
 
     update(deltaTime)
     {
-        if (this.messages.length > 0)
+        if (this.messages.length > 0 && !healthDisplay.isDead())
         {
             let curMessage = this.messages[0];
             if (curMessage.initDelay > 0.0)
@@ -177,7 +177,7 @@ class Shell
             aw.drawText({text:line, x:this.x, y:this.y + (index * this.lineHeight), fontName:"courier", fontSize:14, fontStyle:"bold", color:foregroundColor, textBaseline:"top"})
         });
 
-        if (Date.now() % 1000 < 500)
+        if (!healthDisplay.isDead() && Date.now() % 1000 < 500)
         {
             let xCursor = this.x + (this.lines[this.lines.length - 1].length * 8.4) + 2.0;
             let yCursor = this.y + ((this.lines.length - 1) * this.lineHeight);

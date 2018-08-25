@@ -5,6 +5,7 @@ class System
         this.name = name;
         this.systemIdx = systemIdx;
         this.curState = "disabled";
+        this.offlineTime = 0.0;
         
         if (systemIdx === 0)
         {
@@ -29,6 +30,14 @@ class System
 
     update(deltaTime)
     {
+        if (this.isOffline())
+        {
+            this.offlineTime += deltaTime;
+        }
+        else
+        {
+            this.offlineTime = 0.0;
+        }
     }
 
     render()
@@ -56,5 +65,19 @@ class System
 
         let fontColor = displayOffline ? "#FFF" : foregroundColor;
         aw.drawText({text:this.name, x:xRect + 10, y:yRect + 22, fontName:"courier", fontSize:28, fontStyle:"bold", color:fontColor, textBaseline:"middle"})
+    }
+
+    static GetNumSystemsOffline()
+    {
+        let numSystemsOffline = 0;
+        systems.forEach(system =>
+        {
+            if (system.isOffline() && system.offlineTime >= 1.0)
+            {
+                numSystemsOffline++;
+            }
+        });
+
+        return numSystemsOffline;
     }
 }

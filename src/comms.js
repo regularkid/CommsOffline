@@ -21,7 +21,7 @@ class Comms extends System
             shell.addMessage("may not be recieved properly.\n");
             shell.addMessage("\n");
             shell.addMessage("  on      enable communications\n")
-            shell.addMessage("  off     disables communications\n")
+            shell.addMessage("  off     disable communications\n")
         }
     }
 
