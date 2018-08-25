@@ -10,6 +10,7 @@ class Shell
         this.lineHeight = 20;
         this.cursorBlinkTimer = 0;
         this.messages = [];
+        this.handler = undefined;
 
         window.addEventListener("keydown", e => this.onKeyDown(e.key));
         this.addLine("> ");
@@ -36,8 +37,8 @@ class Shell
         this.messages.push(
         {
             message:message,
-            initDelay:initDelay,
-            charDelay:charDelay,
+            initDelay:initDelay !== undefined ? initDelay : 0.0,
+            charDelay:charDelay !== undefined ? charDelay : 0.005,
             curCharDelay:0.0
         });
     }
@@ -51,42 +52,63 @@ class Shell
         }
 
         let curLineIdx = this.lines.length - 1;
+        let curLine = this.getCurLine();
 
         if (key === "Enter")
         {
-            // TODO: Execute commands and do actual parsing here
-            if (this.lines[curLineIdx] === "> message")
+            let fullCommand = curLine.slice(this.getPrefixLength()).toLowerCase().trim();
+            let command = fullCommand.split(" ")[0];
+            let args = fullCommand.split(" ").slice(1);
+
+            if (this.handler !== undefined)
             {
-                this.addMessage("Message Number 1\n", 1.0, 0.1);
-            }
-            else if (this.lines[curLineIdx] === "> help")
-            {
-                this.addMessage("This will be where help text goes.\n", 0.2, 0.0125);
-                this.addMessage("2nd line.\n", 0.2, 0.0125);
-                this.addMessage("3rd line.\n", 0.2, 0.0125);
-            }
-            else if (this.lines[curLineIdx] === "> clear")
-            {
-                this.lines = [];
-                this.addLine("> ");
+                this.handler(command);
             }
             else
             {
-                this.addMessage("Unknown command\n", 0.1, 0.01);
+                if (command in systemsByName)
+                {
+                    let system = systemsByName[command];
+                    system.onCommand(args);
+                }
+                else if (command === "help")
+                {
+                    let system = (args.length > 0 && args[0] in systemsByName) ? systemsByName[args[0]] : undefined;
+                    let shortVersion = args.length === 2 && args[1] === "-s"
+                    let isValidHelpCommand = (args.length === 1 || (args.length === 2 && args[1] === "-s")) && system !== undefined && !system.isDisabled();
+                    if (isValidHelpCommand)
+                    {
+                        system.onHelpCommand(shortVersion);
+                    }
+                    else
+                    {
+                        this.addMessage("Usage: help [system name] [-s]\n");
+                        this.addMessage("  -s      short version\n");
+                    }
+                }
+                else if (command === "clear")
+                {
+                    this.lines = [];
+                    this.addLine("> ");
+                }
+                else
+                {
+                    this.addMessage("Unknown command\n", 0.1, 0.01);
+                }
             }
 
             //aw.playNote("a", 1, 0.01);
         }
         else if (key === "Backspace")
         {
-            if (this.lines[curLineIdx].length > 2)
+            if (curLine.length > this.getPrefixLength())
             {
                 this.lines[curLineIdx] = this.lines[curLineIdx].slice(0, -1);
             }
 
             //aw.playNote("a", 1, 0.01);
         }
-        else if (key.length === 1 && this.lines[curLineIdx].length < this.maxLineLength && /[a-zA-Z0-9\s.,-=\\!/@#$%^&*()_+;:'"`~]/.test(key))
+        else if (key.length === 1 && curLine.length < this.maxLineLength && /[a-zA-Z0-9\s.,-=\\!/@#$%^&*()_+;:'"`~]/.test(key))
         {
             this.lines[curLineIdx] += key;
 
@@ -165,5 +187,22 @@ class Shell
             aw.ctx.fillStyle = foregroundColor;
             aw.ctx.fillRect(xCursor, yCursor, widthCursor, heightCursor);
         }
+    }
+
+    getCurLine()
+    {
+        let curLineIdx = this.lines.length - 1;
+        return this.lines[curLineIdx];
+    }
+
+    getPrefixLength()
+    {
+        let curLineIdx = this.lines.length - 1;
+        return this.lines[curLineIdx].startsWith("> ") ? 2 : 0;
+    }
+
+    setHandler(handler)
+    {
+        this.handler = handler;
     }
 }

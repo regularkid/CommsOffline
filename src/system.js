@@ -4,12 +4,27 @@ class System
     {
         this.name = name;
         this.systemIdx = systemIdx;
-        this.isOnline = !(systemIdx === 1 || systemIdx === 4 || systemIdx === 5);  // DEBUG TESTING
+        this.curState = "disabled";
+        
+        if (systemIdx === 0)
+        {
+            this.curState = "online";
+        }
+    }
+
+    isDisabled()
+    {
+        return this.curState === "disabled";
     }
 
     isOnline()
     {
-        return this.isOnline;
+        return this.curState === "online";
+    }
+
+    isOffline()
+    {
+        return this.curState === "offline";
     }
 
     update(deltaTime)
@@ -18,13 +33,17 @@ class System
 
     render()
     {
+        if (this.isDisabled())
+        {
+            return;
+        }
+
         let xRect = 590;
         let yRect = 10 + this.systemIdx*52;
         let widthRect = 200;
         let heightRect = 42;
 
-        let displayOffline = !this.isOnline && (Date.now() % 500 < 250);
-
+        let displayOffline = this.isOffline() && (Date.now() % 500 < 250);
         if (displayOffline)
         {
             aw.ctx.fillStyle = "#880000";

@@ -7,13 +7,6 @@ class Status
         this.y = 410;
         this.lineHeight = 18;
         this.maxLines = 5;
-
-        // DEBUG
-        this.addLine("login successful");
-        this.addLine("all systems online");
-        this.addLine("memory system offline");
-        this.addLine("imaging system offline");
-        this.addLine("network system offline");
     }
 
     addLine(text)
