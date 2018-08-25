@@ -1,6 +1,6 @@
 var screenWidth = 800;
 var screenHeight = 600;
-var screenScale = 1.0;
+var screenScale = 1.4;
 var backgroundColor = "#141414";
 var foregroundColor = "#02E002";
 var systems = [];
@@ -53,6 +53,6 @@ function start()
 
 function playing()
 {
-    aw.ctx.shadowBlur = 0.5;
-    aw.ctx.shadowColor = foregroundColor;
+    //aw.ctx.shadowBlur = 0.5;
+    //aw.ctx.shadowColor = foregroundColor;
 }

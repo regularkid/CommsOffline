@@ -24,7 +24,7 @@ class Aw
         this.canvas.style.width = `${width * scale}px`;
         this.canvas.style.height = `${height * scale}px`;
         this.canvas.style.backgroundColor = "black";
-        this.canvas.style["image-rendering"] = "pixelated";
+        //this.canvas.style["image-rendering"] = "pixelated";
         document.getElementById("game").appendChild(this.canvas);
 
         this.ctx = this.canvas.getContext('2d');
