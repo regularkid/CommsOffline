@@ -18,6 +18,7 @@ function start()
     backgroundColor = "#141414";
     foregroundColor = "#02E002";
 
+    aw.addEntity(new GameController());
     aw.addEntity(new Background());
 
     // Terminal elements
