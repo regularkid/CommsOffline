@@ -8,7 +8,7 @@ class Health
         this.decreasePerSecPerOfflineSys =
         [
             0.0,
-            1.0,
+            3.0,
             1.5,
             2.5,
             3.0,
@@ -31,9 +31,19 @@ class Health
         aw.drawText({text:`SYSTEM HEALTH: ${Math.floor(this.health)}%`, x:this.x, y:this.y + 8, fontName:"courier", fontSize:18, fontStyle:"bold", color:"#000", textBaseline:"middle"})
 
         let numBars = Math.floor(this.health / 5.0);
+        let barColor = foregroundColor;
+        if (this.health <= 15.0)
+        {
+            barColor = (Date.now() % 250 < 125) ? "#880000" : foregroundColor;
+        }
+        else if (this.health <= 33.0)
+        {
+            barColor = (Date.now() % 500 < 250) ? "#880000" : foregroundColor;
+        }
+
         for (let i = 0; i < numBars; ++i)
         {
-            aw.ctx.fillStyle = foregroundColor;
+            aw.ctx.fillStyle = barColor;
             aw.ctx.fillRect(this.x + i*28.7, this.y + 24, 24.7, 38);
         }
     }
