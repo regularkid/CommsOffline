@@ -8,7 +8,7 @@ class Health
         this.decreasePerSecPerOfflineSys =
         [
             0.0,
-            3.0,
+            1.0,
             1.5,
             2.5,
             3.0,
