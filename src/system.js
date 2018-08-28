@@ -6,11 +6,6 @@ class System
         this.systemIdx = systemIdx;
         this.curState = "disabled";
         this.offlineTime = 0.0;
-        
-        if (systemIdx === 0)
-        {
-            this.curState = "online";
-        }
     }
 
     isDisabled()
@@ -26,6 +21,18 @@ class System
     isOffline()
     {
         return this.curState === "offline";
+    }
+
+    setOnline()
+    {
+        this.curState = "online";
+        statusDisplay.addLine(`${this.name} system operational`);
+    }
+
+    setOffline()
+    {
+        this.curState = "offline";
+        statusDisplay.addLine(`${this.name} system failure`);
     }
 
     update(deltaTime)

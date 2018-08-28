@@ -685,9 +685,19 @@ class Health
         aw.drawText({text:`SYSTEM HEALTH: ${Math.floor(this.health)}%`, x:this.x, y:this.y + 8, fontName:"courier", fontSize:18, fontStyle:"bold", color:"#000", textBaseline:"middle"})
 
         let numBars = Math.floor(this.health / 5.0);
+        let barColor = foregroundColor;
+        if (this.health <= 15.0)
+        {
+            barColor = (Date.now() % 250 < 125) ? "#880000" : foregroundColor;
+        }
+        else if (this.health <= 33.0)
+        {
+            barColor = (Date.now() % 500 < 250) ? "#880000" : foregroundColor;
+        }
+
         for (let i = 0; i < numBars; ++i)
         {
-            aw.ctx.fillStyle = foregroundColor;
+            aw.ctx.fillStyle = barColor;
             aw.ctx.fillRect(this.x + i*28.7, this.y + 24, 24.7, 38);
         }
     }
@@ -760,11 +770,6 @@ class System
         this.systemIdx = systemIdx;
         this.curState = "disabled";
         this.offlineTime = 0.0;
-        
-        if (systemIdx === 0)
-        {
-            this.curState = "online";
-        }
     }
 
     isDisabled()
@@ -780,6 +785,18 @@ class System
     isOffline()
     {
         return this.curState === "offline";
+    }
+
+    setOnline()
+    {
+        this.curState = "online";
+        statusDisplay.addLine(`${this.name} system operational`);
+    }
+
+    setOffline()
+    {
+        this.curState = "offline";
+        statusDisplay.addLine(`${this.name} system failure`);
     }
 
     update(deltaTime)
@@ -886,12 +903,59 @@ class GameController
 {
     constructor()
     {
+        this.addSystemDelay = 30;
+        this.curAddSystemTimer = 5.0;
 
+        this.nextSystemOfflineTimer = 0.0;
+        this.nextSystemOfflineDelayMin = 5.0;
+        this.nextSystemOfflineDelayMax = 15.0;
+        this.setNextSystemOfflineTimer();
     }
 
     update(deltaTime)
     {
-        
+        this.nextSystemOfflineTimer -= deltaTime;
+        if (this.nextSystemOfflineTimer <= 0.0)
+        {
+            this.setNextSystemOfflineTimer();
+
+            if (System.GetNumSystemsOffline() <= systems.length)
+            {
+                let timeout = 100;
+                while (--timeout > 0)
+                {
+                    let randSystemIdx = Math.floor(Math.random() * systems.length);
+                    if (systems[randSystemIdx].isOnline())
+                    {
+                        systems[randSystemIdx].setOffline();
+                        break;
+                    }
+                }
+            }
+        }
+
+        this.curAddSystemTimer -= deltaTime;
+        if (this.curAddSystemTimer <= 0.0)
+        {
+            this.curAddSystemTimer = this.addSystemDelay;
+            for (let i = 0; i < systems.length; i++)
+            {
+                if (systems[i].isDisabled())
+                {
+                    systems[i].setOnline();
+                    if (i < systems.length - 1)
+                    {
+                        statusDisplay.addLine(`Next system operational in ${this.curAddSystemTimer} seconds`);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    setNextSystemOfflineTimer()
+    {
+        this.nextSystemOfflineTimer = this.nextSystemOfflineDelayMin + (Math.random() * (this.nextSystemOfflineDelayMax - this.nextSystemOfflineDelayMin));
     }
 }
 class EndGame
