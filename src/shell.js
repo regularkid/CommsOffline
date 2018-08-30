@@ -62,7 +62,7 @@ class Shell
 
             if (this.handler !== undefined)
             {
-                this.handler(command);
+                this.handler.commandHandler(command, args);
             }
             else
             {
@@ -164,7 +164,7 @@ class Shell
                 // Go back to prompt if we're done with our messages
                 if (this.messages.length === 0)
                 {
-                    this.addLine("> ");
+                    this.addLine(this.handler !== undefined ? "" : "> ");
                 }
             }
         }

@@ -2,13 +2,13 @@ class GameController
 {
     constructor()
     {
-        this.addSystemDelay = 30;
-        this.curAddSystemTimer = 5.0;
+        this.addSystemDelay = 2;
+        this.curAddSystemTimer = 2.0;
 
-        this.nextSystemOfflineTimer = 0.0;
-        this.nextSystemOfflineDelayMin = 5.0;
+        this.nextSystemOfflineDelayMin = 7.0;
         this.nextSystemOfflineDelayMax = 15.0;
         this.setNextSystemOfflineTimer();
+        this.nextSystemOfflineTimer += this.curAddSystemTimer;
     }
 
     update(deltaTime)
@@ -23,7 +23,7 @@ class GameController
                 let timeout = 100;
                 while (--timeout > 0)
                 {
-                    let randSystemIdx = Math.floor(Math.random() * systems.length);
+                    let randSystemIdx = 1;//Math.floor(Math.random() * systems.length);
                     if (systems[randSystemIdx].isOnline())
                     {
                         systems[randSystemIdx].setOffline();

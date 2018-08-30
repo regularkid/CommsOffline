@@ -74,6 +74,11 @@ class System
         aw.drawText({text:this.name, x:xRect + 10, y:yRect + 22, fontName:"courier", fontSize:28, fontStyle:"bold", color:fontColor, textBaseline:"middle"})
     }
 
+    getAliases()
+    {
+        return [];
+    }
+
     static GetNumSystemsOffline()
     {
         let numSystemsOffline = 0;

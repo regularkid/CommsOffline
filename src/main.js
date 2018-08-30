@@ -35,11 +35,11 @@ function start()
     // Systems
     systems = [];
     systems.push(new Comms());
-    systems.push(new System("MEMORY", 1));
-    systems.push(new System("SECURITY", 2));
+    systems.push(new Memory());
+    systems.push(new Network());
     systems.push(new System("THERMAL", 3));
     systems.push(new System("IMAGING", 4));
-    systems.push(new System("NETWORK", 5));
+    systems.push(new System("SECURITY", 5));
     systems.push(new System("PROPULSION", 6));
     systems.push(new System("LASERS", 7));
     systems.push(new System("TIMING", 8));
@@ -50,6 +50,10 @@ function start()
     {
         aw.addEntity(system);
         systemsByName[system.name.toLowerCase()] = system;
+        system.getAliases().forEach(alias =>
+        {
+            systemsByName[alias] = system;
+        });
     });
 
     aw.addEntity(new Foreground());

@@ -17,11 +17,11 @@ class Comms extends System
         {
             shell.addMessage("\n");
             shell.addMessage("Controls the communications system.\n");
-            shell.addMessage("When offline, inbound status messages\n");
-            shell.addMessage("may not be recieved properly.\n");
             shell.addMessage("\n");
             shell.addMessage("  on      enable communications\n")
             shell.addMessage("  off     disable communications\n")
+            shell.addMessage("\n");
+            shell.addMessage("alias: com\n");
         }
     }
 
@@ -43,5 +43,10 @@ class Comms extends System
         {
             this.onHelpCommand(false);
         }
+    }
+
+    getAliases()
+    {
+        return ["com"];
     }
 }

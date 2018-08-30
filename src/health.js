@@ -50,6 +50,6 @@ class Health
 
     isDead()
     {
-        return this.health <= 0.0;
+        return false;//this.health <= 0.0;
     }
 }
